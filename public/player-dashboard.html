@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Player Dashboard</title>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+    <style>
+  .card {
+    height: 300px; 
+    overflow: hidden;
+  }
+  .card-img-top {
+     
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 0.5rem;
+  }
+  .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .btn {
+    font-size: 0.875rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .custom-card {
+  max-width: 220px;          /* smaller size */
+  margin: auto;
+  border-radius: 15px;       /* curved edges */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* shadow */
+}
+
+.custom-card img {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+</style>
+<script>
+$(document).ready(function () {
+
+  $('#btnFetchWithAJAX3').on('click', function () {
+
+    const email = $('#loginEmail').val().trim();
+    const oldPwd = $('#loginPwd').val().trim();
+    const newPwd = $('#newPwd').val().trim();
+
+    if (email === "" || oldPwd === "" || newPwd === "") {
+      alert("Please fill all fields");
+      return;
+    }
+
+    $.ajax({
+      url: '/update-pwd',
+      type: 'POST',
+      data: {
+        signupEmail: email,
+        signupPwd: oldPwd,
+        newPwd: newPwd
+      },
+      success: function (resp) {
+        alert(resp);
+        $('#edit').modal('hide');
+      }
+    });
+  });
+
+});
+</script>
+
+<script>
+    function showUser() {
+        let activeUser = localStorage.getItem("activeUser");
+        document.getElementById("welcome").innerHTML = activeUser;
+    }
+
+   function doLogout()
+   {
+    localStorage.removeItem("activeUser");
+    location.href="index.html";
+   }
+
+</script>
+
+</head>
+<body onload="showUser();">
+   <center>
+        <h2><b>Welcome:<span id="welcome">*</span></b></h2>
+    </center>
+  <div class="container my-4">
+    
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 text-center">
+          <img src="pics/profile pic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">My Profile</h5>
+            <p class="card-text"></p>
+            <a href="player-profile.html" class="btn btn-primary">Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 text-center">
+          <img src="pics/tornaments.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Events</h5>
+            <p class="card-text"></p>
+            <a href="explore-events.html" class="btn btn-primary">Explore Events</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 text-center">
+          <img src="pics/settings.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Change Your Password</h5>
+            <p class="card-text"></p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit">Edit Settings</button>
+          </div>
+        </div>
+      </div>
+
+        <div id="edit" class="modal fade">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark text-white position-relative">
+
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                        data-bs-dismiss="modal"></button>
+
+                    <div class="p-4">
+                        <h4 class="text-center mb-3">Update Password</h4>
+
+                        <form>
+
+                            <div class="mb-2">
+                                <label>Email</label>
+                                <input type="email" class="form-control form-control-sm" id="loginEmail" required>
+                            </div>
+
+                            <div class="mb-3 password-container">
+                                <label> Old Password</label>
+                                <input type="password" class="form-control form-control-sm" id="loginPwd" required>
+                            </div>
+
+                            <div class="mb-3 password-container">
+                                <label> New Password</label>
+                                <input type="password" class="form-control form-control-sm" id="newPwd" required>
+                            </div>
+
+                            <button type="button" class="btn btn-light btn-sm w-50" id="btnFetchWithAJAX3">
+                                Update Password
+                            </button>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+      <!-- Card 4 -->
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 text-center">
+          <img src="pics/logout2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Logout</h5>
+            <p class="card-text"></p>
+            <a href="#" class="btn btn-primary" onclick="doLogout()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

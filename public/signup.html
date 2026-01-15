@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ 
+</head>
+
+<body>
+    <center>
+        <form action="/server-signup" method="post" enctype="multipart/form-data">
+        <h2>Signup Modal</h2>
+
+        <div class="form-floating mb-3" style="margin-bottom: 10px;">
+            <label for="floatingInput">Email</label>
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="txtEmail" autofocus>
+
+            <input type="button" value="Search" id="btnFetchWithAJAX">
+            <span id="errEmail"></span>
+            
+        </div>
+
+        <div class="form-floating" class="pwd"style="margin-bottom: 10px;">
+            <label for="floatingPassword">Password</label>
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="txtPwd">
+        </div>
+
+        <div class="user"style="margin-bottom: 10px;">
+            User Type
+                <select name="comboUser">
+                    <option value="none">Select</option>
+                    <option value="Player">Player</option>
+                    <option value="Organiser">Organiser</option>
+                </select>
+        </div>
+
+        <div id="btn"style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-light">SignUp</button>
+        </div>
+
+    </form>
+    </center>
+</body>
+
+</html>

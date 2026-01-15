@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+
+  <script>
+    function showPrev(fileRef, prevRef) {
+      const [file] = fileRef.files
+      if (file) {
+        prevRef.src = URL.createObjectURL(file)
+      }
+    }
+  </script>
+  <script>
+    function showUser() {
+        let activeUser = localStorage.getItem("activeUser");
+        document.getElementById("inputEmail4").value = activeUser;
+    }
+</script>
+</head>
+
+<body onload="showUser();">
+  <div class="row ">
+  </div>
+  <div class="container mt-4">
+
+    <div class="row ">
+      <div class="col-md-8 offset-md-2  ">
+        <center>
+          <h2>Details</h2>
+        </center>
+      </div>
+    </div>
+
+    <div class="col-md-8 offset-md-2">
+
+      <form class="row g-3" action="/org-details" method="POST" enctype="multipart/form-data">
+        <div class="col-md-12">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4" name="inputEmail4" readonly/>
+        </div>
+       <!-- <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword4" name="inputPassword4" readonly/>
+        </div>-->
+        <div class="col-md-6">
+          <label for="inputOrgName" class="form-lable">Org. Name</label>
+          <input type="text" class="form-control" id="inputOrgName" name="inputOrgName" />
+        </div>
+        <div class="col-md-6">
+          <label for="inputRegNum" class="form-lable">Registration Number</label>
+          <input type="text" class="form-control" id="inputRegNum" name="inputRegNum" />
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="text" class="form-control" id="inputAddress" name="inputAddress" placeholder="1234 Main St" />
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity" name="inputCity" />
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select id="inputState" class="form-select" name="inputState">
+            <option selected>Choose...</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="ssam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputPin" class="form-label">Pincode</label>
+          <input type="text" class="form-control" id="inputPin" name="inputPin" />
+        </div>
+        <div class="col-12">
+          <label for="inputSports" class="form-label">Details in Sports</label>
+          <input type="text" class="form-control" id="inputSports" name="inputSports" />
+        </div>
+        <div class="col-md-6">
+          <label for="inputWebsite" class="form-lable">Website</label>
+          <input type="text" class="form-control" id="inputWebsite" name="inputWebsite" />
+        </div>
+        <div class="col-md-4">
+          <label for="inputInsta" class="form-lable">Insta Link</label>
+          <input type="text" class="form-control" id="inputInsta" name="inputInsta" />
+        </div>
+        <div class="col-md-4">
+          <label for="inputHead" class="form-lable">Org. Head</label>
+          <input type="text" class="form-control" id="inputHead" name="inputHead" />
+        </div>
+        <div class="col-md-4">
+          <label for="inputContact" class="form-lable">Contact Number</label>
+          <input type="text" class="form-control" id="inputContact" name="inputContact" />
+        </div>
+        <div class="col-md-6">
+          <label for="inputPic" class="form-lable">Registartion certification Pic</label>
+          <input type="file" class="form-control" id="inputPic" name="inputPic" onchange="showPrev(inputPic,prev)" />
+          <img src="...." id="prev" width="200" class="mt-3" />
+        </div>
+        <div class="col-md-12">
+          <label for="inputInfo" class="form-lable">Other Information</label>
+          <textarea class="form-control" id="inputInfo" rows="4" name="inputInfo"></textarea>
+
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary" value="Update" formaction="/update-user">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <nav class="navbar  bg-light mt-5" style="transform: translateY(50px);">
+  </nav>
+
+
+</body>
+</html>

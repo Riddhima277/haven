@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script>
+         var mymodule = angular.module("KuchModule", []);
+        mymodule.controller("KuchController", function ($scope, $http) {
+            $scope.jsonArray = [];
+            $scope.emailid = "";
+            $scope.nameuser = "";
+            $scope.dob = "";
+            $scope.gender = "";
+            $scope.contact = "";
+            $scope.address = "";
+            $scope.game = "";
+            $scope.searchedOnce = false;
+
+            var url = "/do-fetch-players?emailid=" + $scope.emailid + "nameuser=" + $scope.nameuser + "dob=" + $scope.dob + "gender=" + $scope.gender+ "contact=" + $scope.contact + "address=" + $scope.address + "game=" + $scope.game ;
+            $http.get(url).then(fetchSuccess, fetchFail);
+
+            function fetchSuccess(response) {
+                $scope.jsonArray = response.data;
+                $scope.searchedOnce = true;
+            }
+
+            function fetchFail(error) {
+                alert("Fetch Error:" + JSON.stringify(error.data));
+            }
+        });
+    </script>
+</head>
+<body ng-app="KuchModule" ng-controller="KuchController">
+        <center>
+        <h2><b>All Registered Players</b></h2><br>
+    </center>
+      <div ng-if="jsonArray.length > 0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>SR.No</th>
+                        <th>EmailId</th>
+                        <th>Player Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Contact Number</th>
+                        <th>Address</th>
+                        <th>Sports</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="obj in jsonArray">
+                        <td>{{$index+1}}</td>
+                        <td>{{obj.emailid}}</td>
+                        <td>{{obj.nameuser}}</td>
+                        <td>{{obj.dob}}</td>
+                        <td>{{obj.gender}}</td>
+                        <td>{{obj.contact}}</td>
+                        <td>{{obj.address}}</td>
+                        <td>{{obj.game}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

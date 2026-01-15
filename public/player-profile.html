@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function showPrev(fileRef, prevRef) {
+            const [file] = fileRef.files
+            if (file) {
+                prevRef.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnFetchWithAJAX").click(function () {
+                let obj = {
+                    type: "post",
+                    url: "/get-one",
+                    data: {
+                        inputEmail5: $("#inputEmail5").val()
+                    }
+                };
+
+                $.ajax(obj).then(function (responseJsonAry) {
+                    let nameuser = responseJsonAry[0].nameuser;
+                    let dob = responseJsonAry[0].dob;
+                    if (dob && dob.includes("/")) {
+                        let [d, m, y] = dob.split("/");
+                        dob = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+                    }
+                    $("#inputDOB").val(dob);
+                    let gender = responseJsonAry[0].gender;
+                    let contact = responseJsonAry[0].contact;
+                    let address = responseJsonAry[0].address;
+                    let game = responseJsonAry[0].game;
+                    let otherinfo = responseJsonAry[0].otherinfo;
+                    let acardpicurl = responseJsonAry[0].acardpicurl;
+                    let profilepicurl = responseJsonAry[0].profilepicurl;
+                    let dobFormatted = new Date(dob).toLocaleDateString();
+
+                    alert(
+                        nameuser + "\n" +
+                        dobFormatted + "\n" +
+                        gender + "\n" +
+                        contact + "\n" +
+                        address + "\n" +
+                        game + "\n" +
+                        otherinfo + "\n" +
+                        acardpicurl + "\n" +
+                        profilepicurl
+                    );
+
+                    $("#inputName").val(nameuser);
+                    $("#inputDOB").val(dob);
+                    $("#inputGender").val(gender);
+                    $("#inputContact1").val(contact);
+                    $("#inputAddress1").val(address);
+                    $("#inputGame").val(game);
+                    $("#inputInfo1").val(otherinfo);
+
+                    $("#prev1").attr("src", acardpicurl);
+                    $("#prev2").attr("src", profilepicurl);
+
+                    $("#hdn1").val(acardpicurl);
+                    $("#hdn2").val(profilepicurl);
+                }).fail(function (err) {
+                    alert(err.message);
+                });
+            });
+        });
+
+    </script>
+ <script>
+    function showUser() {
+        let activeUser = localStorage.getItem("activeUser");
+        document.getElementById("inputEmail5").value = activeUser;
+    }
+</script>
+</head>
+
+<body onload="showUser();">
+    <div class="row ">
+    </div>
+    <div class="container mt-4">
+
+        <div class="row ">
+            <div class="col-md-8 offset-md-2  ">
+                <center>
+                    <h2>Player Profile</h2>
+                </center>
+            </div>
+        </div>
+
+        <div class="col-md-8 offset-md-2">
+
+            <form class="row g-3" action="/player-profile" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="hdn1" name="hdn1">
+                <input type="hidden" id="hdn2" name="hdn2">
+                <div class="col-md-7">
+                    <label for="inputEmail5" class="form-label">Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="inputEmail5" name="inputEmail5" readonly/>
+                        <button class="btn btn-outline-secondary" type="button" id="btnFetchWithAJAX">Get Data</button>
+                    </div>
+                    <span id="errEmail" class="text-danger"></span>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="inputPic1" class="form-lable">Upload Front of Adhaar Card</label>
+                    <input type="file" class="form-control" id="inputPic1" name="inputPic1"
+                        onchange="showPrev(inputPic1,prev1)" />
+                    <img src="...." id="prev1" width="200" height="180" class="mt-3" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputPic2" class="form-lable">Profile Pic</label>
+                    <input type="file" class="form-control" id="inputPic2" name="inputPic2"
+                        onchange="showPrev(inputPic2,prev2)" />
+                    <img src="...." id="prev2" width="200" height="180" class="mt-3" />
+                </div>
+
+                <div class="col-md-5">
+                    <label for="inputName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="inputName" />
+                </div>
+
+                <div class="col-md-5">
+                    <label for="inputDOB" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="inputDOB" name="inputDOB" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="inputGender" class="form-label">Gender</label>
+                        <select id="inputGender" class="form-select" name="inputGender">
+                            <option selected>Choose...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="inputContact1" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="inputContact1" name="inputContact1" />
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputAddress1" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="inputAddress1" name="inputAddress1"
+                        placeholder="1234 Main St" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="inputGame" class="form-label">Games You Play</label>
+                    <select id="inputGame" class="form-select" name="inputGame">
+                        <option selected>Choose...</option>
+                        <option value="Chess">Chess</option>
+                        <option value="Archery">Archery</option>
+                        <option value="Boxing">Boxing</option>
+                        <option value="Bungee Jumping">Bungee Jumping</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Basketball">Basketball</option>
+                        <option value="Archery">Archery</option>
+                        <option value="Water Polo">Water Polo</option>
+                        <option value="Table Tennis">Table Tennis</option>
+                        <option value="Shooting">Shooting</option>
+                        <option value="Paintball">Paintball</option>
+                        <option value="Kickboxing">Kickboxing</option>
+                        <option value="Judo">Judo</option>
+                        <option value="Horseback Riding">Horseback Riding</option>
+                        <option value="Football">Football</option>
+                        <option value="Handball">Handball</option>
+                        <option value="Diving">Diving</option>
+                        <option value="Muay Thai">Muay Thai</option>
+                        <option value="Rugby">Rugby</option>
+                        <option value="Surfing">Surfing</option>
+                        <option value="Baseball">Baseball</option>
+                        <option value="Wrestling">Wrestling</option>
+                        <option value="Volleyball">Volleyball</option>
+                        <option value="Taekwondo">Taekwondo</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Skateboarding">Skateboarding</option>
+                        <option value="Rowing">Rowing</option>
+                        <option value="Paragliding">Paragliding</option>
+                        <option value="Martial Arts">Martial Arts</option>
+                        <option value="Karate">Karate</option>
+                        <option value="Hockey">Hockey</option>
+                        <option value="Ice Hockey">Ice Hockey</option>
+                        <option value="Golf">Golf</option>
+                        <option value="Dodgeball">Dodgeball</option>
+                        <option value="Bowling">Bowling</option>
+                        <option value="Badminton">Badminton</option>
+                        <option value="Cricket">Cricket</option>
+                        <option value="Kayaking">Kayaking</option>
+                        <option value="Weight Lifting">Weight Lifting</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputInfo1" class="form-lable">Other Information</label>
+                    <textarea class="form-control" id="inputInfo1" rows="4" name="inputInfo1"></textarea>
+
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary">Uplaod Data</button>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" value="Modify"
+                        formaction="/modify-user">Modify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
