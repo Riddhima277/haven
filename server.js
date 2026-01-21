@@ -314,7 +314,7 @@ app.post("/post-tour", function (req, resp) {
 app.get("/do-fetch-tournaments-by-email", function (req, resp) {
     let emailid = req.query.emailid;
 
-    mySqlVen.query("SELECT * FROM tournaments WHERE emailid=?", [req.query.emailid], function (err, allRecords) {
+    mySqlVen.query("SELECT * FROM tournaments_1 WHERE emailid=?", [req.query.emailid], function (err, allRecords) {
         if (err) {
             console.log(err);
             resp.send("error");
