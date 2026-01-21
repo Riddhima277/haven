@@ -299,7 +299,7 @@ app.post("/post-tour", function (req, resp) {
     let contact = req.body.inputContact;
 
     mySqlVen.query(
-        "INSERT INTO tournaments_1(emailid,event_title,doe,toe,address,city,sports,minage,maxage,lastdate,fee,prize,contact) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "INSERT INTO tournaments1(emailid,event_title,doe,toe,address,city,sports,minage,maxage,lastdate,fee,prize,contact) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
         [emailid, event_title, doe, toe, address, city, sports, minage, maxage, lastdate, fee, prize, contact],
         function (errKuch) {
             if (errKuch == null)
