@@ -328,7 +328,7 @@ app.get("/do-fetch-tournaments-by-email", function (req, resp) {
 app.get("/delete-tournament", function (req, resp) {
     let rid = req.query.rid;
 
-    mySqlVen.query("DELETE FROM tournaments_1 WHERE rid=?", [req.query.rid], function (err, allRecords) {
+    mySqlVen.query("DELETE FROM tournaments1 WHERE rid=?", [req.query.rid], function (err, allRecords) {
         if (err) {
             console.log(err);
             resp.send("error");
